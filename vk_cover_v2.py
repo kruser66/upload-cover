@@ -63,6 +63,7 @@ if __name__ == '__main__':
     group_token = os.environ['VK_GROUP_TOKEN']
     group_id = int(os.environ['VK_GROUP_ID'])
     album_id = os.environ['VK_ALBUM_WITH_COVER_ID']
+    delay = int(os.environ['DELAY'])
 
     # для работы с альбомами ВК
     vk_service_session = vk.VkApi(token=service_token, api_version='5.131')
@@ -82,7 +83,6 @@ if __name__ == '__main__':
                 group_id,
                 album_id
             )
-            print("Update cover's images")
         except Exception as error:
             logger.exception(f'VK_COVER: Ошибка {error}')
 
@@ -90,7 +90,6 @@ if __name__ == '__main__':
             try:
                 cover.pop('type', None)
                 upload_cover(vk_api, vk_upload, group_id, **cover)
-                print(f'Cover is changed')
             except Exception as error:
-                logger.exception('VK_COVER: Ошибка {error}')
-            sleep(300)
+                logger.exception(f'VK_COVER: Ошибка {error}')
+            sleep(delay)
